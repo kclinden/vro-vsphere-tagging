@@ -16,7 +16,7 @@ https://www.virtuallyghetto.com/2020/03/using-vro-rest-api-to-execute-a-workflow
 
 ## Configure VAPI Endpoint
 1. Run the ootb workflow "Import vAPI metamodel"
-2. Enter your vCenter Server URL such as https://<vcsa>/api
+2. Enter your vCenter Server URL such as `https://<vcsa>/api`
 3. Enter credentials
 4. Check boxes for adding vAPI endpoint, SSL, and Certificate Trust
 
