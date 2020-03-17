@@ -1,7 +1,7 @@
 # vRealize Orchestrator Package for Tagging vSphere VMs
 Sample Workflow Package for Tagging VMs with vRealize Orchestrator. 
 
-This package has been tested with vRA 7.x and 8.x.
+This package has been tested with vRO 7.x and 8.x.
 
 *Note: This is the package that William Lam used for his VEBA integration and vRO API posts. More info below.*
 
