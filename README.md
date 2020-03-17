@@ -21,6 +21,6 @@ https://www.virtuallyghetto.com/2020/03/using-vro-rest-api-to-execute-a-workflow
 4. Check boxes for adding vAPI endpoint, SSL, and Certificate Trust
 
 ## Issues
-If you have any problems feel free to open an issue or hit me up on the Mware Code Slack!
+If you have any problems feel free to open an issue or hit me up on the VMware Code Slack!
 
 Join in on the discussion within the VMware Code Slack team's PowerCLI channel: https://code.vmware.com/slack/
