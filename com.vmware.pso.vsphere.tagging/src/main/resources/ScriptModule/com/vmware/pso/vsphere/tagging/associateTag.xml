@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="associateTag" result-type="void" api-version="6.0.0" id="1d412001-2219-4fd6-be43-4e3a9265c089" version="0.0.0" allowed-operations="vef">
+  <param n="vapiEndpoint" t="VAPI:VAPIEndpoint"><![CDATA[VAPI Endpoint]]></param>
+  <param n="object_id_type" t="string"><![CDATA[]]></param>
+  <param n="object_id_id" t="string"><![CDATA[]]></param>
+  <param n="tag_id" t="string"><![CDATA[]]></param>
+  <script encoded="false"><![CDATA[var object_id = new com_vmware_vapi_std_dynamic__ID()
+object_id.type = object_id_type;
+object_id.id = object_id_id;
+var client = vapiEndpoint.client();
+var service = new com_vmware_cis_tagging_tag__association(client);
+service.attach(tag_id,object_id);
+client.close();]]></script>
+</dunes-script-module>

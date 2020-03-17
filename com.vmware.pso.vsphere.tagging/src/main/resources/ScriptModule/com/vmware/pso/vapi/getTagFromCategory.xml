@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getTagFromCategory" result-type="string" api-version="6.0.0" id="e577b943-bb39-4751-9e9c-4820fa3b11f1" version="0.0.0" allowed-operations="vef">
+  <param n="vapiEndpoint" t="VAPI:VAPIEndpoint"><![CDATA[]]></param>
+  <param n="category" t="string"><![CDATA[]]></param>
+  <param n="tagToFind" t="string"><![CDATA[]]></param>
+  <script encoded="false"><![CDATA[if(vapiEndpoint == null) {
+  throw "'endpoint' parameter should not be null";
+}
+if(category == null){
+	throw "category parameter should not be null"
+}
+if(tagToFind == null){
+	throw "tag parameter should not be null"
+}
+
+var client = vapiEndpoint.client();
+var tagsvc = new com_vmware_cis_tagging_tag(client);
+var tags = tagsvc.list_tags_for_category(category);
+if(tags != null){
+	for each(tag in tags){
+		var tag = tagsvc.get(tag);
+		if(tag.name == tagToFind){			
+			System.debug("Found tag by name of " + tag.name);  
+			break;
+		}
+	}
+}
+
+if(tag != null){
+	return tag.id
+}
+return null;
+
+
+]]></script>
+</dunes-script-module>

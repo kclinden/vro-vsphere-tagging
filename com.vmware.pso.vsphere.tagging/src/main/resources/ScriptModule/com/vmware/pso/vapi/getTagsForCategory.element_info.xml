@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Exported from [server]</comment>
+<entry key="categoryPath">com.vmware.pso.vapi</entry>
+<entry key="categoryPathEscaped">Y29t.dm13YXJl.cHNv.dmFwaQ==</entry>
+<entry key="name">getTagsForCategory</entry>
+<entry key="type">ScriptModule</entry>
+<entry key="id">d93a0e4f-da74-4f4a-8980-ca7e8ed11026</entry>
+</properties>

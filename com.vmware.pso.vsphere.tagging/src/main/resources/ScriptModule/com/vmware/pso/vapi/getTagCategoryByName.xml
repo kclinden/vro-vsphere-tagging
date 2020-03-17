@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getTagCategoryByName" result-type="string" api-version="6.0.0" id="1a766cdd-0b86-4d25-9616-466bf7036d81" version="0.0.0" allowed-operations="vef">
+  <param n="vapiEndpoint" t="VAPI:VAPIEndpoint"><![CDATA[]]></param>
+  <param n="categoryName" t="string"><![CDATA[]]></param>
+  <script encoded="false"><![CDATA[if (vapiEndpoint == null) {
+  throw "'endpoint' parameter should not be null";
+}
+
+var client = vapiEndpoint.client();
+var categorysvc = new com_vmware_cis_tagging_category(client);
+var categories = categorysvc.list();
+if(categories != null){
+	for each(catId in categories){
+		var category = categorysvc.get(catId);
+		if(category.name == categoryName){			
+			System.debug("Found category by name of " + category.name);  
+			break;
+		}
+	}
+}
+
+if(category != null){
+	return category.id;
+}
+return null;]]></script>
+</dunes-script-module>

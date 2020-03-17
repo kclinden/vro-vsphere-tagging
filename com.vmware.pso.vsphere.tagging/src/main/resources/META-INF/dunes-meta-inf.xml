@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>10.149.88.200:443</comment>
+<entry key="vso-build-nb">12923317</entry>
+<entry key="pkg-description"></entry>
+<entry key="pkg-name">com.vmware.pso.vsphere.tagging</entry>
+<entry key="used-plugins">VAPI#7.5.0,VC#6.5.0</entry>
+<entry key="pkg-owner">O=VMware,OU=Unknown,CN=vRO localhost 2d162d10-f195-4e09-968e-87acd218ec33</entry>
+<entry key="vso-version">7.6.0.12923317</entry>
+<entry key="pkg-id">ff80808170e58b5a0170e5e616b1020b</entry>
+</properties>

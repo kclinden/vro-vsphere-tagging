@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getTagsForCategory" result-type="Array/string" api-version="6.0.0" id="d93a0e4f-da74-4f4a-8980-ca7e8ed11026" version="0.0.0" allowed-operations="vef">
+  <param n="vm" t="VC:VirtualMachine"><![CDATA[]]></param>
+  <param n="categoryName" t="string"><![CDATA[]]></param>
+  <script encoded="false"><![CDATA[if(categoryName == null){
+	return null;
+}
+
+var tagList = [];
+var vapiEndpoint = VAPIManager.findEndpoint("https://" + vm.sdkConnection.sdkId + "/api");
+
+var category = System.getModule("com.vmware.pso.vapi").getTagCategoryByName(vapiEndpoint,categoryName);
+
+var client = vapiEndpoint.client();
+var tagsvc = new com_vmware_cis_tagging_tag(client);
+var tags = tagsvc.list_tags_for_category(category);
+if(tags != null){
+	for each(tag in tags){
+		var tag = tagsvc.get(tag);
+		tagList.push(tag.name);
+	}
+}
+
+if (tagList.length != 0){
+	return tagList.sort();	
+} else {
+	return null;
+}
+]]></script>
+</dunes-script-module>

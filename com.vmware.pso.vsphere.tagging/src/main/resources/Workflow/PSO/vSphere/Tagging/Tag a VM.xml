@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item1" object-name="workflow:name=generic" id="c5b0f16a-b7ff-4df6-a4e9-eb56a5c3a496" version="1.0.0" api-version="6.0.0" allowed-operations="vef" restartMode="1" resumeFromFailedMode="0">
+  <display-name><![CDATA[Tag a VM]]></display-name>
+  <position y="50.0" x="100.0"></position>
+  <input>
+    <param name="vm" type="VC:VirtualMachine">
+      <description><![CDATA[Virtual Machine]]></description>
+    </param>
+    <param name="categoryName" type="string">
+      <description><![CDATA[Category]]></description>
+    </param>
+    <param name="tagToFind" type="string">
+      <description><![CDATA[Tag]]></description>
+    </param>
+  </input>
+  <attrib name="object_id_id" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="object_id_type" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="vapiEndpoint" type="VAPI:VAPIEndpoint" read-only="false"></attrib>
+  <attrib name="tagCategory" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="tag_id" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <workflow-item name="item0" type="end" end-mode="0">
+    <position y="45.40909090909091" x="1084.5"></position>
+  </workflow-item>
+  <workflow-item name="item1" out-name="item5" type="task">
+    <display-name><![CDATA[Get VM Values]]></display-name>
+    <script encoded="false"><![CDATA[object_id_id = vm.id; //set id of vm to tag
+object_id_type = vm.vimType; //set type of object to tag
+var vapiEndpoint = VAPIManager.findEndpoint("https://" + vm.sdkConnection.sdkId + "/api");
+]]></script>
+    <in-binding>
+      <bind name="vm" type="VC:VirtualMachine" export-name="vm"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="object_id_id" type="string" export-name="object_id_id"></bind>
+      <bind name="object_id_type" type="string" export-name="object_id_type"></bind>
+      <bind name="vapiEndpoint" type="VAPI:VAPIEndpoint" export-name="vapiEndpoint"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="204.5"></position>
+  </workflow-item>
+  <workflow-item name="item2" out-name="item3" type="task" script-module="com.vmware.pso.vapi/getTagCategoryByName">
+    <display-name><![CDATA[getTagCategoryByName]]></display-name>
+    <script encoded="false"><![CDATA[//Auto generated script, cannot be modified !
+actionResult = System.getModule("com.vmware.pso.vapi").getTagCategoryByName(vapiEndpoint,categoryName) ;]]></script>
+    <in-binding>
+      <bind name="vapiEndpoint" type="VAPI:VAPIEndpoint" export-name="vapiEndpoint"></bind>
+      <bind name="categoryName" type="string" export-name="categoryName"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="actionResult" type="string" export-name="tagCategory"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="484.5"></position>
+  </workflow-item>
+  <workflow-item name="item3" out-name="item4" type="task" script-module="com.vmware.pso.vapi/getTagFromCategory">
+    <display-name><![CDATA[getTagFromCategory]]></display-name>
+    <script encoded="false"><![CDATA[//Auto generated script, cannot be modified !
+actionResult = System.getModule("com.vmware.pso.vapi").getTagFromCategory(vapiEndpoint,category,tagToFind) ;]]></script>
+    <in-binding>
+      <bind name="vapiEndpoint" type="VAPI:VAPIEndpoint" export-name="vapiEndpoint"></bind>
+      <bind name="category" type="string" export-name="tagCategory"></bind>
+      <bind name="tagToFind" type="string" export-name="tagToFind"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="actionResult" type="string" export-name="tag_id"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="624.5"></position>
+  </workflow-item>
+  <workflow-item name="item4" out-name="item7" type="task" script-module="com.vmware.pso.vsphere.tagging/associateTag">
+    <display-name><![CDATA[associateTag]]></display-name>
+    <script encoded="false"><![CDATA[//Auto generated script, cannot be modified !
+System.getModule("com.vmware.pso.vsphere.tagging").associateTag(vapiEndpoint,object_id_type,object_id_id,tag_id) ;]]></script>
+    <in-binding>
+      <bind name="vapiEndpoint" type="VAPI:VAPIEndpoint" export-name="vapiEndpoint">
+        <description><![CDATA[VAPI Endpoint]]></description>
+      </bind>
+      <bind name="object_id_type" type="string" export-name="object_id_type"></bind>
+      <bind name="object_id_id" type="string" export-name="object_id_id"></bind>
+      <bind name="tag_id" type="string" export-name="tag_id"></bind>
+    </in-binding>
+    <out-binding></out-binding>
+    <position y="55.40909090909091" x="764.5"></position>
+  </workflow-item>
+  <workflow-item name="item5" out-name="item2" type="condition" alt-out-name="item6" comparator="0">
+    <display-name><![CDATA[VAPI?]]></display-name>
+    <script encoded="false"><![CDATA[//Generated by the system, cannot be edited
+return (vapiEndpoint  != null ) ;]]></script>
+    <in-binding>
+      <bind name="vapiEndpoint" type="VAPI:VAPIEndpoint" export-name="vapiEndpoint"></bind>
+    </in-binding>
+    <condition name="vapiEndpoint" type="VAPI:VAPIEndpoint" comparator="0" label="null"></condition>
+    <position y="45.40909090909091" x="344.5"></position>
+  </workflow-item>
+  <workflow-item name="item6" business-status="Unable to find VAPI Endpoint for VM" throw-bind-name="NULL" type="end" end-mode="1">
+    <position y="109.04545454545453" x="385.0"></position>
+  </workflow-item>
+  <workflow-item name="item7" prototype-id="system-log" out-name="item0" type="task" interaction="l">
+    <display-name><![CDATA[System log]]></display-name>
+    <script encoded="false"><![CDATA[//Auto-generated script
+System.log("Successfully tagged vm " + vm.name + "with a tag of " + tagToFind + " from category " + categoryName);
+]]></script>
+    <in-binding>
+      <bind name="vm" type="VC:VirtualMachine" export-name="vm"></bind>
+      <bind name="categoryName" type="string" export-name="categoryName"></bind>
+      <bind name="tagToFind" type="string" export-name="tagToFind"></bind>
+    </in-binding>
+    <out-binding></out-binding>
+    <description><![CDATA[Log the input text to the console log with level 'log']]></description>
+    <position y="55.40909090909091" x="904.5"></position>
+  </workflow-item>
+  <presentation>
+    <p-param name="vm">
+      <desc><![CDATA[Virtual Machine]]></desc>
+      <p-qual kind="static" name="show-select-as" type="string"><![CDATA[list]]></p-qual>
+      <p-qual kind="static" name="mandatory" type="boolean"><![CDATA[true]]></p-qual>
+    </p-param>
+    <p-param name="categoryName">
+      <desc><![CDATA[Category]]></desc>
+      <p-qual kind="ognl" name="genericEnumeration" type="Array/string"><![CDATA[GetAction("com.vmware.pso.vapi","getTagCategoriesForVm").call( #vm )]]></p-qual>
+      <p-qual kind="static" name="mandatory" type="boolean"><![CDATA[true]]></p-qual>
+    </p-param>
+    <p-param name="tagToFind">
+      <desc><![CDATA[Tag]]></desc>
+      <p-qual kind="ognl" name="genericEnumeration" type="Array/string"><![CDATA[GetAction("com.vmware.pso.vapi","getTagsForCategory").call( #vm , #categoryName )]]></p-qual>
+      <p-qual kind="static" name="mandatory" type="boolean"><![CDATA[true]]></p-qual>
+    </p-param>
+  </presentation>
+</workflow>
